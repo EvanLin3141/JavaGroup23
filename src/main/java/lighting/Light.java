@@ -16,7 +16,7 @@ public class Light {
     public float intensityGreen;
     public float intensityBlue;        // intensity of the light source
 
-    public Light(int type, Vector3D v, float r, float g, float b) {
+    public Light(int type, float r, float g, float b, Vector3D v) {
         lightType = type;
         intensityRed = r;
         intensityGreen = g;
@@ -28,4 +28,6 @@ public class Light {
             }
         }
     }
+
+
 }

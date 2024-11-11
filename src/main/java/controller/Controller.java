@@ -1,7 +1,8 @@
 package controller;
 
 import driver.Driver;
-;
+import api.SceneObjects;
+
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ public class Controller {
     private Stage stage;
     private Driver sceneToRender;
     boolean finished = false;
+    private SceneObjects scene;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -34,7 +36,11 @@ public class Controller {
     public void startRayTrace(ActionEvent actionEvent) {
         sceneToRender = new Driver((int) renderedImage.getFitWidth(),
                                    (int) renderedImage.getFitHeight(),
-                "resources/SceneToRender.txt");
+                scene);
         this.run();
+    }
+
+    public void setSceneToRender(SceneObjects scene) {
+        this.scene = scene;
     }
 }
