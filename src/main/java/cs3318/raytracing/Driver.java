@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class Driver  {
+public class Driver  {
     final static int CHUNKSIZE = 100;
     List<Object> objectList;
     List<Object> lightList;
@@ -154,7 +154,7 @@ class Driver  {
 	        throw new IOException(st.toString());
 	}
 
-	Image getRenderedImage() {
+	public Image getRenderedImage() {
     	return canvas.snapshot(null, null);
 	}
 
@@ -182,5 +182,13 @@ class Driver  {
 
 	private Color toFXColor(java.awt.Color c) {
 		return Color.rgb(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha() / 255.0);
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+	public int getWidth() {
+		return this.width;
 	}
 }

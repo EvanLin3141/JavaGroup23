@@ -1,5 +1,6 @@
 package cs3318.raytracing;
 
+import controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

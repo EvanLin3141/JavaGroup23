@@ -6,4 +6,6 @@ module raytracing {
 
     exports cs3318.raytracing;
     opens cs3318.raytracing to javafx.fxml;
+    exports controller;
+    opens controller to javafx.fxml;
 }

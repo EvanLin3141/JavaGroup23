@@ -1,5 +1,7 @@
-package cs3318.raytracing;
+package controller;
 
+import cs3318.raytracing.Driver;
+;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,8 +19,8 @@ public class Controller {
 
     public void run() {
         long time = System.currentTimeMillis();
-        for (int j = 0; j < sceneToRender.height; j += 1) {
-            for (int i = 0; i < sceneToRender.width; i += 1) {
+        for (int j = 0; j < sceneToRender.getHeight(); j += 1) {
+            for (int i = 0; i < sceneToRender.getWidth(); i += 1) {
                 sceneToRender.renderPixel(i, j);
             }
         }
