@@ -1,24 +1,46 @@
-package cs3318.raytracing;
+package lighting;
 
+import cs3318.raytracing.Vector3D;
 import render.Renderable;
+import cs3318.raytracing.Sphere;
 
 import java.awt.*;
 import java.util.List;
 
 public class Ray {
     public static final float MAX_T = Float.MAX_VALUE;
-    Vector3D origin;
-    Vector3D direction;
-    float t;
-    Renderable object;
+    private Vector3D origin;
+    private Vector3D direction;
+    private float scalarParam;
+    private Renderable object;
 
     public Ray(Vector3D eye, Vector3D dir) {
         origin = new Vector3D(eye);
         direction = Vector3D.normalize(dir);
     }
 
+    public Vector3D getOrigin() {
+        return this.origin;
+    }
+
+    public Vector3D getDirection() {
+        return this.direction;
+    }
+
+    public float getScalarParam() {
+       return this.scalarParam;
+    }
+
+    public void setScalarParam(float scalarParam){
+        this.scalarParam = scalarParam;
+    }
+
+    public void setObject(Renderable object) {
+        this.object = object;
+    }
+
     public boolean trace(List<Object> objects) {
-        t = MAX_T;
+        this.scalarParam = MAX_T;
         object = null;
         for (Object objList : objects) {
             Renderable object = (Renderable) objList;
@@ -39,6 +61,6 @@ public class Ray {
     }
 
     public String toString() {
-        return ("ray origin = "+origin+"  direction = "+direction+"  t = "+t);
+        return ("ray origin = "+origin+"  direction = "+direction+"  t = "+scalarParam);
     }
 }

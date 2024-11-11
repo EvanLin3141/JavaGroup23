@@ -10,4 +10,6 @@ module raytracing {
     opens controller to javafx.fxml;
     exports driver;
     opens driver to javafx.fxml;
+    exports lighting;
+    opens lighting to javafx.fxml;
 }

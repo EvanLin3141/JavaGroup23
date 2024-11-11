@@ -1,5 +1,6 @@
 package cs3318.raytracing;
 
+import lighting.Ray;
 import render.Renderable;
 
 import java.awt.*;
@@ -21,14 +22,14 @@ public class Sphere implements Renderable {
 
     @Override
     public boolean intersect(Ray ray) {
-        float dx = center.x - ray.origin.x;
-        float dy = center.y - ray.origin.y;
-        float dz = center.z - ray.origin.z;
-        float v = ray.direction.dot(dx, dy, dz);
+        float dx = center.x - ray.getOrigin().x;
+        float dy = center.y - ray.getOrigin().y;
+        float dz = center.z - ray.getOrigin().z;
+        float v = ray.getDirection().dot(dx, dy, dz);
 
         // Do the following quick check to see if there is even a chance
         // that an intersection here might be closer than a previous one
-        if (v - radius > ray.t)
+        if (v - radius > ray.getScalarParam())
             return false;
 
         // Test if the ray actually intersects the sphere
@@ -39,11 +40,11 @@ public class Sphere implements Renderable {
         // Test if the intersection is in the positive
         // ray direction and it is the closest so far
         t = v - ((float) Math.sqrt(t));
-        if ((t > ray.t) || (t < 0))
+        if ((t > ray.getScalarParam()) || (t < 0))
             return false;
 
-        ray.t = t;
-        ray.object = this;
+        ray.setScalarParam(t);
+        ray.setObject(this);
         return true;
     }
     @Override
@@ -56,12 +57,12 @@ public class Sphere implements Renderable {
         //   2. a unit-length surface normal (n)
         //   3. a unit-length vector towards the ray's origin (v)
         //
-        float px = ray.origin.x + ray.t*ray.direction.x;
-        float py = ray.origin.y + ray.t*ray.direction.y;
-        float pz = ray.origin.z + ray.t*ray.direction.z;
+        float px = ray.getOrigin().x + ray.getScalarParam()*ray.getDirection().x;
+        float py = ray.getOrigin().y + ray.getScalarParam()*ray.getDirection().y;
+        float pz = ray.getOrigin().z + ray.getScalarParam()*ray.getDirection().z;
 
         Vector3D p = new Vector3D(px, py, pz);
-        Vector3D v = new Vector3D(-ray.direction.x, -ray.direction.y, -ray.direction.z);
+        Vector3D v = new Vector3D(-ray.getDirection().x, -ray.getDirection().y, -ray.getDirection().z);
         Vector3D n = new Vector3D(px - center.x, py - center.y, pz - center.z);
         n.normalize();
 

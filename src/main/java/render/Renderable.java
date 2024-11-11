@@ -1,6 +1,6 @@
 package render;
 
-import cs3318.raytracing.Ray;
+import lighting.Ray;
 
 import java.awt.*;
 import java.util.List;

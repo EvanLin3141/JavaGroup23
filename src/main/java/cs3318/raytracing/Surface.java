@@ -1,5 +1,8 @@
 package cs3318.raytracing;
 
+import lighting.Light;
+import lighting.Ray;
+
 import java.awt.*;
 import java.util.List;
 

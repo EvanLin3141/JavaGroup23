@@ -1,4 +1,6 @@
-package cs3318.raytracing;
+package lighting;
+
+import cs3318.raytracing.Vector3D;
 
 // All the public variables here are ugly, but I
 // wanted Lights and Surfaces to be "friends"
