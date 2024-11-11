@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.List;
 
 // An example "Renderable" object
-class Sphere implements Renderable {
+public class Sphere implements Renderable {
     Surface surface;
     Vector3D center;
     float radius;

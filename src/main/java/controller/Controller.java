@@ -1,6 +1,6 @@
 package controller;
 
-import cs3318.raytracing.Driver;
+import driver.Driver;
 ;
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;

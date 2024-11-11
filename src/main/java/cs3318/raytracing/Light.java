@@ -2,7 +2,7 @@ package cs3318.raytracing;
 
 // All the public variables here are ugly, but I
 // wanted Lights and Surfaces to be "friends"
-class Light {
+public class Light {
     public static final int AMBIENT = 0;
     public static final int DIRECTIONAL = 1;
     public static final int POINT = 2;

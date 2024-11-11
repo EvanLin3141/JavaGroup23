@@ -3,7 +3,7 @@ package cs3318.raytracing;
 import java.awt.*;
 import java.util.List;
 
-class Ray {
+public class Ray {
     public static final float MAX_T = Float.MAX_VALUE;
     Vector3D origin;
     Vector3D direction;

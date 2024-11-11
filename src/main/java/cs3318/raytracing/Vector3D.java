@@ -1,7 +1,7 @@
 package cs3318.raytracing;
 
 // A simple vector class
-class Vector3D {
+public class Vector3D {
     public float x, y, z;
 
     // constructors
