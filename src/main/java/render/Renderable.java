@@ -1,4 +1,6 @@
-package cs3318.raytracing;
+package render;
+
+import cs3318.raytracing.Ray;
 
 import java.awt.*;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 // be ray traced. Using this interface it is straight forward
 // to add new objects
 
-abstract interface Renderable {
+public abstract interface Renderable {
     public abstract boolean intersect(Ray r);
     public abstract Color shade(Ray r, java.util.List<Object> lights, List<Object> objects, Color bgnd);
     public String toString();

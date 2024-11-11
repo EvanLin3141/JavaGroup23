@@ -1,5 +1,7 @@
 package cs3318.raytracing;
 
+import render.Renderable;
+
 import java.awt.*;
 import java.util.List;
 
