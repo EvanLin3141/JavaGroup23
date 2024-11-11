@@ -1,8 +1,7 @@
 package lighting;
 
-import cs3318.raytracing.Vector3D;
+import shapes.Vector3D;
 import render.Renderable;
-import cs3318.raytracing.Sphere;
 
 import java.awt.*;
 import java.util.List;

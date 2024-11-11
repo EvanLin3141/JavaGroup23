@@ -1,6 +1,6 @@
 package lighting;
 
-import cs3318.raytracing.Vector3D;
+import shapes.Vector3D;
 
 // All the public variables here are ugly, but I
 // wanted Lights and Surfaces to be "friends"
@@ -10,19 +10,21 @@ public class Light {
     public static final int POINT = 2;
 
     public int lightType;
-    public Vector3D lvec;           // the position of a point light or
+    public Vector3D lightVec;           // the position of a point light or
     // the direction to a directional light
-    public float ir, ig, ib;        // intensity of the light source
+    public float intensityRed;
+    public float intensityGreen;
+    public float intensityBlue;        // intensity of the light source
 
     public Light(int type, Vector3D v, float r, float g, float b) {
         lightType = type;
-        ir = r;
-        ig = g;
-        ib = b;
+        intensityRed = r;
+        intensityGreen = g;
+        intensityBlue = b;
         if (type != AMBIENT) {
-            lvec = v;
+            lightVec = v;
             if (type == DIRECTIONAL) {
-                lvec.normalize();
+                lightVec.normalize();
             }
         }
     }

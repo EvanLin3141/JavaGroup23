@@ -1,6 +1,8 @@
 package driver;
 
-import cs3318.raytracing.*;
+import shapes.Sphere;
+import shapes.Surface;
+import shapes.Vector3D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

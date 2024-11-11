@@ -4,12 +4,14 @@ module raytracing {
     requires javafx.fxml;
     requires javafx.graphics;
 
-    exports cs3318.raytracing;
-    opens cs3318.raytracing to javafx.fxml;
+    exports core;
+    opens core to javafx.fxml;
     exports controller;
     opens controller to javafx.fxml;
     exports driver;
     opens driver to javafx.fxml;
     exports lighting;
     opens lighting to javafx.fxml;
+    exports shapes;
+    opens shapes to javafx.fxml;
 }
