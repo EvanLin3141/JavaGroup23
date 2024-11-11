@@ -65,7 +65,7 @@ class Sphere implements Renderable {
 
         // The illumination model is applied
         // by the surface's Shade() method
-        return surface.Shade(p, n, v, lights, objects, bgnd);
+        return surface.shade(p, n, v, lights, objects, bgnd);
     }
 
     @Override
