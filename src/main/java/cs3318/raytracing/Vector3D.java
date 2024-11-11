@@ -1,27 +1,5 @@
 package cs3318.raytracing;
 
-import java.awt.*;
-import java.util.List;
-
-
-/***************************************************
-*
-*   An instructional Ray-Tracing Renderer written
-*   for MIT 6.837  Fall '98 by Leonard McMillan.
-*
-*   A fairly primitive Ray-Tracing program written
-*   on a Sunday afternoon before Monday's class.
-*   Everything is contained in a single file. The
-*   structure should be fairly easy to extend, with
-*   new primitives, features and other such stuff.
-*
-*   I tend to write things bottom up (old K&R C
-*   habits die slowly). If you want the big picture
-*   scroll to the applet code at the end and work
-*   your way back here.
-*
-****************************************************/
-
 // A simple vector class
 class Vector3D {
     public float x, y, z;
@@ -91,13 +69,3 @@ class Vector3D {
         return new String("["+x+", "+y+", "+z+"]");
     }
 }
-
-
-
-
-
-
-
-
-
-
