@@ -93,43 +93,7 @@ class Vector3D {
 }
 
 
-class Ray {
-    public static final float MAX_T = Float.MAX_VALUE;
-    Vector3D origin;
-    Vector3D direction;
-    float t;
-    Renderable object;
 
-    public Ray(Vector3D eye, Vector3D dir) {
-        origin = new Vector3D(eye);
-        direction = Vector3D.normalize(dir);
-    }
-
-    public boolean trace(List<Object> objects) {
-        t = MAX_T;
-        object = null;
-        for (Object objList : objects) {
-            Renderable object = (Renderable) objList;
-            object.intersect(this);
-        }
-        return (object != null);
-    }
-
-    // The following method is not strictly needed, and most likely
-    // adds unnecessary overhead, but I prefered the syntax
-    //
-    //            ray.Shade(...)
-    // to
-    //            ray.object.Shade(ray, ...)
-    //
-    public final Color Shade(List<Object> lights, List<Object> objects, Color bgnd) {
-        return object.Shade(this, lights, objects, bgnd);
-    }
-
-    public String toString() {
-        return ("ray origin = "+origin+"  direction = "+direction+"  t = "+t);
-    }
-}
 
 
 
@@ -210,7 +174,7 @@ class Surface {
                 Vector3D poffset = new Vector3D(p.x + TINY*reflect.x, p.y + TINY*reflect.y, p.z + TINY*reflect.z);
                 Ray reflectedRay = new Ray(poffset, reflect);
                 if (reflectedRay.trace(objects)) {
-                    Color rcolor = reflectedRay.Shade(lights, objects, bgnd);
+                    Color rcolor = reflectedRay.shade(lights, objects, bgnd);
                     r += kr*rcolor.getRed();
                     g += kr*rcolor.getGreen();
                     b += kr*rcolor.getBlue();
@@ -237,80 +201,4 @@ class Surface {
 }
 
 
-// An object must implement a Renderable interface in order to
-// be ray traced. Using this interface it is straight forward
-// to add new objects
-abstract interface Renderable {
-    public abstract boolean intersect(Ray r);
-    public abstract Color Shade(Ray r, List<Object> lights, List<Object> objects, Color bgnd);
-    public String toString();
-}
 
-// An example "Renderable" object
-class Sphere implements Renderable {
-    Surface surface;
-    Vector3D center;
-    float radius;
-    float radSqr;
-
-    public Sphere(Surface s, Vector3D c, float r) {
-        surface = s;
-        center = c;
-        radius = r;
-        radSqr = r*r;
-    }
-
-    public boolean intersect(Ray ray) {
-        float dx = center.x - ray.origin.x;
-        float dy = center.y - ray.origin.y;
-        float dz = center.z - ray.origin.z;
-        float v = ray.direction.dot(dx, dy, dz);
-
-        // Do the following quick check to see if there is even a chance
-        // that an intersection here might be closer than a previous one
-        if (v - radius > ray.t)
-            return false;
-
-        // Test if the ray actually intersects the sphere
-        float t = radSqr + v*v - dx*dx - dy*dy - dz*dz;
-        if (t < 0)
-            return false;
-
-        // Test if the intersection is in the positive
-        // ray direction and it is the closest so far
-        t = v - ((float) Math.sqrt(t));
-        if ((t > ray.t) || (t < 0))
-            return false;
-
-        ray.t = t;
-        ray.object = this;
-        return true;
-    }
-
-    public Color Shade(Ray ray, List<Object> lights, List<Object> objects, Color bgnd) {
-        // An object shader doesn't really do too much other than
-        // supply a few critical bits of geometric information
-        // for a surface shader. It must must compute:
-        //
-        //   1. the point of intersection (p)
-        //   2. a unit-length surface normal (n)
-        //   3. a unit-length vector towards the ray's origin (v)
-        //
-        float px = ray.origin.x + ray.t*ray.direction.x;
-        float py = ray.origin.y + ray.t*ray.direction.y;
-        float pz = ray.origin.z + ray.t*ray.direction.z;
-
-        Vector3D p = new Vector3D(px, py, pz);
-        Vector3D v = new Vector3D(-ray.direction.x, -ray.direction.y, -ray.direction.z);
-        Vector3D n = new Vector3D(px - center.x, py - center.y, pz - center.z);
-        n.normalize();
-
-        // The illumination model is applied
-        // by the surface's Shade() method
-        return surface.Shade(p, n, v, lights, objects, bgnd);
-    }
-
-    public String toString() {
-        return ("sphere "+center+" "+radius);
-    }
-}

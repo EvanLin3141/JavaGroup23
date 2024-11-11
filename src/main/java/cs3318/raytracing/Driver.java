@@ -166,7 +166,7 @@ class Driver  {
 		Ray ray = new Ray(eye, dir);
 		if (ray.trace(objectList)) {
 			java.awt.Color bg = toAWTColor(background);
-			gc.setFill(toFXColor(ray.Shade(lightList, objectList, bg)));
+			gc.setFill(toFXColor(ray.shade(lightList, objectList, bg)));
 		} else {
 			gc.setFill(background);
 		}
