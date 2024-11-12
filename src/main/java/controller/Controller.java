@@ -62,7 +62,7 @@ public class Controller {
     public void zoomOut() {
         Camera camera = scene.getCamera();
         if (camera != null) {
-            //camera.setFov(camera.getFov() * zoomFactor); // Increase FOV for zoom out
+            camera.setFov(camera.getFov() * zoomFactor); // Increase FOV for zoom out
             refreshView();
         }
     }
