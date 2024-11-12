@@ -32,7 +32,7 @@ public class Vector3D {
     }
 
     public final Vector3D cross(Vector3D B) {
-        return new Vector3D(y*B.z - z*B.y, z*B.x - x*B.z, x*B.y - y*B.x);
+        return new Vector3D(this.y*B.z - this.z*B.y, this.z*B.x - this.x*B.z, this.x*B.y - this.y*B.x);
     }
 
     public final Vector3D cross(float Bx, float By, float Bz) {

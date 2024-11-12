@@ -53,7 +53,16 @@ public class Driver  {
 		this.objectList = scene.getSpheres();
 		this.lightList = scene.getLights();
 
-		nullViewPoint();
+		Camera camera = scene.getCamera();
+		if (camera != null) {
+			this.eye = camera.getEye();
+			this.lookat = camera.getLookAt();
+			this.fov = camera.getFov();
+			this.background = Color.rgb(0, 0, 0);
+			System.out.println(eye);
+			System.out.println(lookat);
+		}
+		nullViewPoint();  // Set default values if the camera is missing
 		viewDirection();
     }
 
