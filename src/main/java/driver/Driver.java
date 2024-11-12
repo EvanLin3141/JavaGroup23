@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import lighting.Light;
 import lighting.Ray;
 import api.SceneObjects;
+import camera.Camera;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Driver  {
     Surface currentSurface;
 	Canvas canvas;
 	GraphicsContext gc;
-
+	Camera camera;
     Vector3D eye, lookat, up;
     Vector3D Du, Dv, Vp;
     float fov;
@@ -50,17 +51,19 @@ public class Driver  {
         lightList = new ArrayList<>(CHUNKSIZE);
         currentSurface = new Surface(0.8f, 0.2f, 0.9f, 0.2f, 0.4f, 0.4f, 10.0f, 0f, 0f, 1f);
 		this.objectList = scene.getSpheres();
-		System.out.println("Spheres Loaded" + this.objectList);
 		this.lightList = scene.getLights();
-		System.out.println("Light Loaded");
 
-        // Initialize more defaults if they weren't specified
-        if (eye == null) eye = new Vector3D(0, 0, 10);
-        if (lookat == null) lookat = new Vector3D(0, 0, 0);
-        if (up  == null) up = new Vector3D(0, 1, 0);
-        if (background == null) background = Color.rgb(0,0,0);
+		nullViewPoint();
 		viewDirection();
     }
+
+	public void nullViewPoint() {
+		// Initialize more defaults if they weren't specified
+		if (eye == null) eye = new Vector3D(0, 0, 10);
+		if (lookat == null) lookat = new Vector3D(0, 0, 0);
+		if (up  == null) up = new Vector3D(0, 1, 0);
+		if (background == null) background = Color.rgb(0,0,0);
+	}
 
 	public Image getRenderedImage() {
     	return canvas.snapshot(null, null);

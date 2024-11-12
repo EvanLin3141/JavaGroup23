@@ -1,14 +1,13 @@
 package api;
 
-import shapes.Sphere;
-import lighting.Light;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import camera.Camera;
 
-public class SceneObjects implements API{
+public class SceneObjects implements ObjectScene {
     private List<Object> spheres = new ArrayList<>();
     private List<Object> lights = new ArrayList<>();
+    //private Camera camera;
 
     @Override
     public void addSphere(Object sphere) {
@@ -29,4 +28,9 @@ public class SceneObjects implements API{
     public List<Object> getLights() {
         return lights;
     }
+/*
+    @Override
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }*/
 }
