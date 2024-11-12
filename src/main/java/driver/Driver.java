@@ -63,6 +63,7 @@ public class Driver  {
 		if (lookat == null) lookat = new Vector3D(0, 0, 0);
 		if (up  == null) up = new Vector3D(0, 1, 0);
 		if (background == null) background = Color.rgb(0,0,0);
+
 	}
 
 	public Image getRenderedImage() {

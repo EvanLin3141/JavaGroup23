@@ -36,9 +36,10 @@ public class Main extends Application {
 
     public void createObjects() {
         // Set up the camera
-        Vector3D eye = new Vector3D(10.5f, 10.5f, -10.5f);
+        Vector3D eye = new Vector3D(10.5f, 5.5f, -10.5f);
         Vector3D lookat = new Vector3D(-0.5f, 0f, -0.5f);
         Camera camera = new Camera(eye, lookat);
+        scene.setCamera(camera);
 
         // Add lights
         scene.addLight(new Light(Light.AMBIENT, 0.2f, 0.2f, 0.2f, null));

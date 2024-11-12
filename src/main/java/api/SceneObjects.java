@@ -7,7 +7,7 @@ import camera.Camera;
 public class SceneObjects implements ObjectScene {
     private List<Object> spheres = new ArrayList<>();
     private List<Object> lights = new ArrayList<>();
-    //private Camera camera;
+    private Camera camera;
 
     @Override
     public void addSphere(Object sphere) {
@@ -28,9 +28,14 @@ public class SceneObjects implements ObjectScene {
     public List<Object> getLights() {
         return lights;
     }
-/*
+
     @Override
     public void setCamera(Camera camera) {
         this.camera = camera;
-    }*/
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
 }
