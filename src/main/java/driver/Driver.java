@@ -27,6 +27,7 @@ public class Driver  {
     Vector3D eye, lookat, up;
     Vector3D Du, Dv, Vp;
     float fov;
+	RayTracingObjects scene;
 
     Color background;
 
@@ -35,9 +36,7 @@ public class Driver  {
     public Driver(int width, int height, RayTracingObjects scene) {
         this.width = width;
         this.height = height;
-
-
-
+		this.scene = scene;
 		canvas = new Canvas(this.width, this.height);
 		gc = canvas.getGraphicsContext2D();
 

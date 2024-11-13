@@ -35,6 +35,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+    //Sets up everything before button is pressed.
     public void createObjects() {
         // Set up the camera
         Vector3D eye = new Vector3D(1.5f, 10.5f, -1.5f);
