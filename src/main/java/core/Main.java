@@ -2,7 +2,6 @@ package core;
 
 import api.RayTracing;
 import controller.Controller;
-import api.RayTracing;
 import lighting.Light;
 import shapes.Vector3D;
 import shapes.Surface;

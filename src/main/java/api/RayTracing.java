@@ -36,7 +36,6 @@ public class RayTracing implements RayTracingAPI {
         this.camera = camera;
     }
 
-    @Override
     public Camera getCamera() {
         return camera;
     }
