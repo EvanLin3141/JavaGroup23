@@ -1,18 +1,17 @@
 package controller;
 
 import api.RayTracing;
-import driver.Driver;
+import api.Render;
 import camera.Camera;
 import shapes.Vector3D;
 
 import javafx.event.ActionEvent;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 
 public class Controller {
     public ImageView renderedImage;
-    private Driver sceneToRender;
+    private Render sceneToRender;
     boolean finished = false;
     private RayTracing scene;
     private static Camera camera;
@@ -37,7 +36,7 @@ public class Controller {
 
     //Starts RayTracing when button is pressed.
     public void startRayTrace(ActionEvent actionEvent) {
-        sceneToRender = new Driver((int) renderedImage.getFitWidth(),
+        sceneToRender = new Render((int) renderedImage.getFitWidth(),
                                    (int) renderedImage.getFitHeight(),
                 scene);
         this.run();
@@ -86,7 +85,7 @@ public class Controller {
     }
 
     private void refreshView() {
-        sceneToRender = new Driver(800, 600, scene); // Adjust width, height as necessary
+        sceneToRender = new Render(800, 600, scene); // Adjust width, height as necessary
         run();
     }
 

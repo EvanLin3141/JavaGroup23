@@ -1,21 +1,18 @@
-package driver;
+package api;
 
-import shapes.Sphere;
 import shapes.Surface;
 import shapes.Vector3D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import lighting.Light;
 import lighting.Ray;
-import api.RayTracing;
 import camera.Camera;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Driver {
+public class Render {
 	final static int CHUNKSIZE = 100;
 	private List<Object> objectList;
 	private List<Object> lightList;
@@ -30,7 +27,7 @@ public class Driver {
 	private Color background;
 	private int width, height;
 
-	public Driver(int width, int height, RayTracing scene) {
+	public Render(int width, int height, RayTracing scene) {
 		this.width = width;
 		this.height = height;
 		this.scene = scene;
