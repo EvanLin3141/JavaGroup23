@@ -1,8 +1,7 @@
 package controller;
 
-import api.RayTracingObjects;
+import api.RayTracing;
 import driver.Driver;
-import api.RayTracingObjects;
 import camera.Camera;
 import shapes.Vector3D;
 
@@ -16,7 +15,7 @@ public class Controller {
     private Stage stage;
     private Driver sceneToRender;
     boolean finished = false;
-    private RayTracingObjects scene;
+    private RayTracing scene;
     private static Camera camera;
     private final float zoomFactor = 1.1f; // Adjust for zoom scaling
 
@@ -45,12 +44,11 @@ public class Controller {
         this.run();
     }
 
-    public void setSceneToRender(RayTracingObjects scene) {
+    public void setSceneToRender(RayTracing scene) {
         this.scene = scene;
     }
 
     public void viewFromX() {
-        Camera camera = scene.getCamera();
         if (camera != null) {
             Vector3D currentPosition = camera.getEye();
             camera.setPosition(new Vector3D(currentPosition.x + shiftAmount, currentPosition.y, currentPosition.z));
@@ -59,7 +57,6 @@ public class Controller {
     }
 
     public void viewFromY() {
-        Camera camera = scene.getCamera();
         if (camera != null) {
             Vector3D currentPosition = camera.getEye();
             camera.setPosition(new Vector3D(currentPosition.x, currentPosition.y + shiftAmount, currentPosition.z));
@@ -68,7 +65,6 @@ public class Controller {
     }
 
     public void viewFromZ() {
-        Camera camera = scene.getCamera();
         if (camera != null) {
             Vector3D currentPosition = camera.getEye();
             camera.setPosition(new Vector3D(currentPosition.x, currentPosition.y, currentPosition.z + shiftAmount));
@@ -77,7 +73,6 @@ public class Controller {
     }
 
     public void zoomIn() {
-        Camera camera = scene.getCamera();
         if (camera != null) {
             camera.setFov(camera.getFov() / zoomFactor); // Decrease FOV for zoom in
             refreshView();
@@ -85,7 +80,6 @@ public class Controller {
     }
 
     public void zoomOut() {
-        Camera camera = scene.getCamera();
         if (camera != null) {
             camera.setFov(camera.getFov() * zoomFactor); // Increase FOV for zoom out
             refreshView();

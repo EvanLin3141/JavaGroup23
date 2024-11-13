@@ -6,7 +6,7 @@ import camera.Camera;
 import lighting.Light;
 import shapes.Sphere;
 
-public class RayTracingObjects implements RayTracingAPI {
+public class RayTracing implements RayTracingAPI {
     private List<Object> spheres = new ArrayList<>();
     private List<Object> lights = new ArrayList<>();
     private Camera camera;

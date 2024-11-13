@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import lighting.Light;
 import lighting.Ray;
-import api.RayTracingObjects;
+import api.RayTracing;
 import camera.Camera;
 
 import java.io.*;
@@ -27,13 +27,13 @@ public class Driver  {
     Vector3D eye, lookat, up;
     Vector3D Du, Dv, Vp;
     float fov;
-	RayTracingObjects scene;
+	RayTracing scene;
 
     Color background;
 
     int width, height;
 
-    public Driver(int width, int height, RayTracingObjects scene) {
+    public Driver(int width, int height, RayTracing scene) {
         this.width = width;
         this.height = height;
 		this.scene = scene;
