@@ -3,6 +3,8 @@ package api;
 import java.util.ArrayList;
 import java.util.List;
 import camera.Camera;
+import lighting.Light;
+import shapes.Sphere;
 
 public class RayTracingObjects implements RayTracingAPI {
     private List<Object> spheres = new ArrayList<>();
@@ -10,12 +12,12 @@ public class RayTracingObjects implements RayTracingAPI {
     private Camera camera;
 
     @Override
-    public void addSphere(Object sphere) {
+    public void addSphere(Sphere sphere) {
         spheres.add(sphere);
     }
 
     @Override
-    public void addLight(Object light) {
+    public void addLight(Light light) {
         lights.add(light);
     }
 
