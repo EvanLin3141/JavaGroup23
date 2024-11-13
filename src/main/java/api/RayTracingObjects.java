@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import camera.Camera;
 
-public class SceneObjects implements ObjectScene {
+public class RayTracingObjects implements RayTracingAPI {
     private List<Object> spheres = new ArrayList<>();
     private List<Object> lights = new ArrayList<>();
     private Camera camera;

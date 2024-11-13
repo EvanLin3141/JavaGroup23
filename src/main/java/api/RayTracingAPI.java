@@ -5,7 +5,7 @@ import camera.Camera;
 import java.util.List;
 
 
-public interface ObjectScene {
+public interface RayTracingAPI {
     List<Object> getSpheres();
     List<Object> getLights();
     void addSphere(Object sphere);

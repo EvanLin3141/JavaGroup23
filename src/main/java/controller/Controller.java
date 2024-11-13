@@ -1,7 +1,8 @@
 package controller;
 
+import api.RayTracingObjects;
 import driver.Driver;
-import api.SceneObjects;
+import api.RayTracingObjects;
 import camera.Camera;
 import shapes.Vector3D;
 
@@ -15,7 +16,7 @@ public class Controller {
     private Stage stage;
     private Driver sceneToRender;
     boolean finished = false;
-    private SceneObjects scene;
+    private RayTracingObjects scene;
     private final float zoomFactor = 1.1f; // Adjust for zoom scaling
 
 
@@ -98,7 +99,7 @@ public class Controller {
         this.run();
     }
 
-    public void setSceneToRender(SceneObjects scene) {
+    public void setSceneToRender(RayTracingObjects scene) {
         this.scene = scene;
     }
 }

@@ -1,7 +1,8 @@
 package core;
 
+import api.RayTracingObjects;
 import controller.Controller;
-import api.SceneObjects;
+import api.RayTracingObjects;
 import lighting.Light;
 import shapes.Vector3D;
 import shapes.Surface;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    SceneObjects scene = new SceneObjects();
+    RayTracingObjects scene = new RayTracingObjects();
 
     @Override
     public void start(Stage primaryStage) throws Exception {

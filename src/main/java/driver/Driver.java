@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import lighting.Light;
 import lighting.Ray;
-import api.SceneObjects;
+import api.RayTracingObjects;
 import camera.Camera;
 
 import java.io.*;
@@ -32,7 +32,7 @@ public class Driver  {
 
     int width, height;
 
-    public Driver(int width, int height, SceneObjects scene) {
+    public Driver(int width, int height, RayTracingObjects scene) {
         this.width = width;
         this.height = height;
 
