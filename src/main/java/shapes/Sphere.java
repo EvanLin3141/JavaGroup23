@@ -2,6 +2,7 @@ package shapes;
 
 import lighting.Ray;
 import render.Renderable;
+import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.List;

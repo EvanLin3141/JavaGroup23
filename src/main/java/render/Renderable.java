@@ -2,7 +2,7 @@ package render;
 
 import lighting.Ray;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.List;
 
 // An object must implement a Renderable interface in order to

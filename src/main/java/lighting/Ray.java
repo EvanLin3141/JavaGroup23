@@ -3,7 +3,7 @@ package lighting;
 import shapes.Vector3D;
 import render.Renderable;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.List;
 
 public class Ray {

@@ -3,7 +3,7 @@ package shapes;
 import lighting.Light;
 import lighting.Ray;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 import java.util.List;
 
 /*
@@ -107,6 +107,6 @@ public class Surface {
         g = (g < 0) ? 0 : g;
         b = (b < 0) ? 0 : b;
 
-        return new Color(r, g, b);
+        return Color.color(r, g, b);
     }
 }

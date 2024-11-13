@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 public class Controller {
     public ImageView renderedImage;
-    private Stage stage;
     private Driver sceneToRender;
     boolean finished = false;
     private RayTracing scene;
@@ -87,12 +86,8 @@ public class Controller {
     }
 
     private void refreshView() {
-        // Rerender the scene with updated camera settings
         sceneToRender = new Driver(800, 600, scene); // Adjust width, height as necessary
         run();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 }
