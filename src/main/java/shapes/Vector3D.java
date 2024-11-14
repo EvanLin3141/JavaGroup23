@@ -19,6 +19,19 @@ public class Vector3D {
     }
 
     // methods
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+    public float getZ() {
+        return this.z;
+    }
+
     public final float dot(Vector3D B) {
         return (x*B.x + y*B.y + z*B.z);
     }
