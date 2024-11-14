@@ -8,58 +8,58 @@ import java.util.List;
 
 public class Ray {
     public static final float MAX_T = Float.MAX_VALUE;
-    private Vector3D origin;
-    private Vector3D direction;
-    private float scalarParam;
-    private Renderable object;
+    private Vector3D rayOrigin;
+    private Vector3D rayDirection;
+    private float scalarParameter;
+    private Renderable intersectedObject;
 
-    public Ray(Vector3D eye, Vector3D dir) {
-        origin = new Vector3D(eye);
-        direction = Vector3D.normalize(dir);
+    public Ray(Vector3D origin, Vector3D direction) {
+        rayOrigin = new Vector3D(origin);
+        rayDirection = Vector3D.normalize(direction);
     }
 
     public Vector3D getOrigin() {
-        return this.origin;
+        return this.rayOrigin;
     }
 
     public Vector3D getDirection() {
-        return this.direction;
+        return this.rayDirection;
     }
 
     public float getScalarParam() {
-       return this.scalarParam;
+       return this.scalarParameter;
     }
 
-    public void setScalarParam(float scalarParam){
-        this.scalarParam = scalarParam;
+    public void setScalarParam(float scalarParameter){
+        this.scalarParameter = scalarParameter;
     }
 
-    public void setObject(Renderable object) {
-        this.object = object;
+    public void setIntersectedObject(Renderable object) {
+        this.intersectedObject = object;
     }
 
     public boolean trace(List<Object> objects) {
-        this.scalarParam = MAX_T;
-        object = null;
+        this.scalarParameter = MAX_T;
+        intersectedObject = null;
         for (Object objList : objects) {
             Renderable object = (Renderable) objList;
             object.intersect(this);
         }
-        return (object != null);
+        return (intersectedObject != null);
     }
 
     // The following method is not strictly needed, and most likely
-    // adds unnecessary overhead, but I prefered the syntax
+    // adds unnecessary overhead, but I preferred the syntax
     //
     //            ray.Shade(...)
     // to
     //            ray.object.Shade(ray, ...)
     //
-    public final Color shade(List<Object> lights, List<Object> objects, Color bgnd) {
-        return object.shade(this, lights, objects, bgnd);
+    public final Color shade(List<Object> lights, List<Object> objects, Color backgroundColour) {
+        return intersectedObject.shade(this, lights, objects, backgroundColour);
     }
 
     public String toString() {
-        return ("ray origin = "+origin+"  direction = "+direction+"  t = "+scalarParam);
+        return ("ray origin = "+rayOrigin+"  ray direction = "+rayDirection+"  t = "+scalarParameter);
     }
 }

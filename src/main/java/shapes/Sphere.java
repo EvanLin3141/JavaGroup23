@@ -45,7 +45,7 @@ public class Sphere implements Renderable {
             return false;
 
         ray.setScalarParam(t);
-        ray.setObject(this);
+        ray.setIntersectedObject(this);
         return true;
     }
     @Override
