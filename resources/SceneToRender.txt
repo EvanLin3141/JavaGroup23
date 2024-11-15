@@ -1,5 +1,5 @@
 # Camera
-eye 1.5 10.5 -1.5 
+eye 1.5 10.5 -1.5
 lookat -0.5 0 -0.5
 
 # Lights
