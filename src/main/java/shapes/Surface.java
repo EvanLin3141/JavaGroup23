@@ -15,61 +15,81 @@ kr = reflectance coefficient
 ns phong exponent
  */
 public class Surface {
-    public float ir, ig, ib;        // surface's intrinsic color
-    public float ka, kd, ks, ns;    // constants for phong model
-    public float kt, kr, nt;
+
+    // surface's intrinsic colour
+    public float intrinsicColourRed;
+    public float intrinsicColourGreen;
+    public float intrinsicColourBlue;
+
+    // constants for phong model
+    public float ambientReflection;
+    public float diffuseReflection;
+    public float specularReflection;
+    public float phongExponent;
+    public float transmission;
+    public float reflectance;
+    public float refractiveIndex;
+
     private static final float TINY = 0.001f;
     private static final float I255 = 0.00392156f;  // 1/255
 
-    public Surface(float rval, float gval, float bval,
-                   float a, float d, float s, float n,
-                   float r, float t, float index) {
-        ir = rval; ig = gval; ib = bval;
-        ka = a; kd = d; ks = s; ns = n;
-        kr = r*I255; kt = t; nt = index;
+    public Surface(float red, float green, float blue,
+                   float ambient, float diffuse, float specular, float phongExp,
+                   float reflectance, float transmission, float index) {
+        intrinsicColourRed = red;
+        intrinsicColourGreen = green;
+        intrinsicColourBlue = blue;
+        ambientReflection = ambient;
+        diffuseReflection = diffuse;
+        specularReflection = specular;
+        phongExponent = phongExp;
+        this.reflectance = reflectance*I255;
+        this.transmission = transmission;
+        refractiveIndex = index;
     }
 
-    public Color shade(Vector3D p, Vector3D n, Vector3D v, java.util.List<Object> lights, List<Object> objects, Color bgnd) {
-        float r = 0;
-        float g = 0;
-        float b = 0;
+    public Color shade(Vector3D intersectionPoint, Vector3D surfaceNormal, Vector3D view, java.util.List<Object> lights, List<Object> objects, Color backgroundColour) {
+        float red = 0;
+        float green = 0;
+        float blue = 0;
+
         for (Object lightSources : lights) {
             Light light = (Light) lightSources;
             if (light.lightType == Light.AMBIENT) {
-                r += ka*ir*light.intensityRed;
-                g += ka*ig*light.intensityGreen;
-                b += ka*ib*light.intensityBlue;
+                red += ambientReflection*intrinsicColourRed*light.intensityRed;
+                green += ambientReflection*intrinsicColourGreen*light.intensityGreen;
+                blue += ambientReflection*intrinsicColourBlue*light.intensityBlue;
             } else {
-                Vector3D l;
+                Vector3D lightDirection;
                 if (light.lightType == Light.POINT) {
-                    l = new Vector3D(light.lightVec.x - p.x, light.lightVec.y - p.y, light.lightVec.z - p.z);
-                    l.normalize();
+                    lightDirection = new Vector3D(light.lightVec.x - intersectionPoint.x, light.lightVec.y - intersectionPoint.y, light.lightVec.z - intersectionPoint.z);
+                    lightDirection.normalize();
                 } else {
-                    l = new Vector3D(-light.lightVec.x, -light.lightVec.y, -light.lightVec.z);
+                    lightDirection = new Vector3D(-light.lightVec.x, -light.lightVec.y, -light.lightVec.z);
                 }
 
                 // Check if the surface point is in shadow
-                Vector3D poffset = new Vector3D(p.x + TINY*l.x, p.y + TINY*l.y, p.z + TINY*l.z);
-                Ray shadowRay = new Ray(poffset, l);
+                Vector3D pointOffset = new Vector3D(intersectionPoint.x + TINY*lightDirection.x, intersectionPoint.y + TINY*lightDirection.y, intersectionPoint.z + TINY*lightDirection.z);
+                Ray shadowRay = new Ray(pointOffset, lightDirection);
                 if (shadowRay.trace(objects))
                     break;
 
-                float lambert = Vector3D.dot(n,l);
+                float lambert = Vector3D.dot(surfaceNormal,lightDirection);
                 if (lambert > 0) {
-                    if (kd > 0) {
-                        float diffuse = kd*lambert;
-                        r += diffuse*ir*light.intensityRed;
-                        g += diffuse*ig*light.intensityGreen;
-                        b += diffuse*ib*light.intensityBlue;
+                    if (diffuseReflection > 0) {
+                        float diffuse = diffuseReflection*lambert;
+                        red += diffuse*intrinsicColourRed*light.intensityRed;
+                        green += diffuse*intrinsicColourGreen*light.intensityGreen;
+                        blue += diffuse*intrinsicColourBlue*light.intensityBlue;
                     }
-                    if (ks > 0) {
+                    if (specularReflection > 0) {
                         lambert *= 2;
-                        float spec = v.dot(lambert*n.x - l.x, lambert*n.y - l.y, lambert*n.z - l.z);
-                        if (spec > 0) {
-                            spec = ks*((float) Math.pow((double) spec, (double) ns));
-                            r += spec*light.intensityRed;
-                            g += spec*light.intensityGreen;
-                            b += spec*light.intensityBlue;
+                        float specular = view.dot(lambert*surfaceNormal.x - lightDirection.x, lambert*surfaceNormal.y - lightDirection.y, lambert*surfaceNormal.z - lightDirection.z);
+                        if (specular > 0) {
+                            specular = specularReflection*((float) Math.pow((double) specular, (double) phongExponent));
+                            red += specular*light.intensityRed;
+                            green += specular*light.intensityGreen;
+                            blue += specular*light.intensityBlue;
                         }
                     }
                 }
@@ -77,36 +97,36 @@ public class Surface {
         }
 
         // Compute illumination due to reflection
-        if (kr > 0) {
-            float t = v.dot(n);
+        if (reflectance > 0) {
+            float t = view.dot(surfaceNormal);
             if (t > 0) {
                 t *= 2;
-                Vector3D reflect = new Vector3D(t*n.x - v.x, t*n.y - v.y, t*n.z - v.z);
-                Vector3D poffset = new Vector3D(p.x + TINY*reflect.x, p.y + TINY*reflect.y, p.z + TINY*reflect.z);
-                Ray reflectedRay = new Ray(poffset, reflect);
+                Vector3D reflect = new Vector3D(t*surfaceNormal.x - view.x, t*surfaceNormal.y - view.y, t*surfaceNormal.z - view.z);
+                Vector3D pointOffset = new Vector3D(intersectionPoint.x + TINY*reflect.x, intersectionPoint.y + TINY*reflect.y, intersectionPoint.z + TINY*reflect.z);
+                Ray reflectedRay = new Ray(pointOffset, reflect);
                 if (reflectedRay.trace(objects)) {
-                    Color rcolor = reflectedRay.shade(lights, objects, bgnd);
-                    r += kr*rcolor.getRed();
-                    g += kr*rcolor.getGreen();
-                    b += kr*rcolor.getBlue();
+                    Color reflectionColour = reflectedRay.shade(lights, objects, backgroundColour);
+                    red += reflectance*reflectionColour.getRed();
+                    green += reflectance*reflectionColour.getGreen();
+                    blue += reflectance*reflectionColour.getBlue();
                 } else {
-                    r += kr*bgnd.getRed();
-                    g += kr*bgnd.getGreen();
-                    b += kr*bgnd.getBlue();
+                    red += reflectance*backgroundColour.getRed();
+                    green += reflectance*backgroundColour.getGreen();
+                    blue += reflectance*backgroundColour.getBlue();
                 }
             }
         }
 
         // Add code for refraction here
 
-        r = (r > 1f) ? 1f : r;
-        g = (g > 1f) ? 1f : g;
-        b = (b > 1f) ? 1f : b;
+        red = (red > 1f) ? 1f : red;
+        green = (green > 1f) ? 1f : green;
+        blue = (blue > 1f) ? 1f : blue;
 
-        r = (r < 0) ? 0 : r;
-        g = (g < 0) ? 0 : g;
-        b = (b < 0) ? 0 : b;
+        red = (red < 0) ? 0 : red;
+        green = (green < 0) ? 0 : green;
+        blue = (blue < 0) ? 0 : blue;
 
-        return Color.color(r, g, b);
+        return Color.color(red, green, blue);
     }
 }
