@@ -7,6 +7,10 @@ import javafx.scene.paint.Color;
 import java.awt.*;
 import java.util.List;
 
+
+/**
+ * Represents a 3D sphere object  that can interact with rays
+ */
 // An example "Renderable" object
 public class Sphere implements Renderable {
     Surface sphereSurface;
@@ -14,6 +18,13 @@ public class Sphere implements Renderable {
     float sphereRadius;
     float radiusSquared;
 
+
+    /**
+     * Constructs a new Sphere object
+     * @param surface Defines the material and appearance of the sphere's surface
+     * @param center Defines the position of the sphere in the scene
+     * @param radius The radius of the sphere
+     */
     public Sphere(Surface surface, Vector3D center, float radius) {
         sphereSurface = surface;
         sphereCenter = center;
@@ -21,6 +32,12 @@ public class Sphere implements Renderable {
         radiusSquared = radius*radius;
     }
 
+
+    /**
+     * Checks if a given ray intersects the sphere
+     * @param ray The ray being tested for intersection
+     * @return True if the ray intersects the sphere, false if it doesn't
+     */
     @Override
     public boolean intersect(Ray ray) {
         float dx = sphereCenter.x - ray.getOrigin().x;
@@ -48,6 +65,15 @@ public class Sphere implements Renderable {
         ray.setIntersectedObject(this);
         return true;
     }
+
+    /**
+     * Calculates the colour of the sphere at the point of intersection
+     * @param ray The ray intersecting the sphere
+     * @param lights The list of lights in the scene
+     * @param objects The list of objects in the scene
+     * @param backgroundColour The background colour of the scene
+     * @return The colour of the sphere at the point of intersection
+     */
     @Override
     public Color shade(Ray ray, java.util.List<Object> lights, List<Object> objects, Color backgroundColour) {
         // An object shader doesn't really do too much other than
@@ -72,6 +98,9 @@ public class Sphere implements Renderable {
         return sphereSurface.shade(intersectionPoint, surfaceNormal, viewVector, lights, objects, backgroundColour);
     }
 
+    /**
+     * @return A string representation of the sphere
+     */
     @Override
     public String toString() {
         return ("sphere "+sphereCenter+" "+sphereRadius);
