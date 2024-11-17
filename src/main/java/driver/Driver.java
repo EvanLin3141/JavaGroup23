@@ -1,5 +1,6 @@
 package driver;
 
+import render.Render;
 import shapes.Sphere;
 import shapes.Surface;
 import shapes.Vector3D;
@@ -19,21 +20,19 @@ public class Driver {
 	final static int CHUNKSIZE = 100;
 	private List<Object> objectList;
 	private List<Object> lightList;
-	private Surface currentSurface;
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private Camera camera;
 	private Vector3D eye, lookat, up;
 	private Vector3D Du, Dv, Vp;
 	private float fov;
-	private RayTracing scene;
+	private Render renderer;
 	private Color background;
 	private int width, height;
 
 	public Driver(int width, int height, RayTracing scene) {
 		this.width = width;
 		this.height = height;
-		this.scene = scene;
 		canvas = new Canvas(this.width, this.height);
 		gc = canvas.getGraphicsContext2D();
 
@@ -45,7 +44,6 @@ public class Driver {
 		// Initialize lists
 		objectList = new ArrayList<>(CHUNKSIZE);
 		lightList = new ArrayList<>(CHUNKSIZE);
-		currentSurface = new Surface(0.8f, 0.2f, 0.9f, 0.2f, 0.4f, 0.4f, 10.0f, 0f, 0f, 1f);
 		this.objectList = scene.getSpheres();
 		this.lightList = scene.getLights();
 
@@ -59,7 +57,9 @@ public class Driver {
 			System.out.println(lookat);
 		}
 		nullViewPoint();
+		this.renderer = new Render(gc, background, eye, objectList, lightList, Du, Dv, Vp);
 		viewDirection();
+
 	}
 
 	public void nullViewPoint() {
@@ -71,25 +71,11 @@ public class Driver {
 	public Image getRenderedImage() {
 		return canvas.snapshot(null, null);
 	}
-
-	public void renderPixel(int i, int j) {
-		Vector3D dir = new Vector3D(
-				i * Du.x + j * Dv.x + Vp.x,
-				i * Du.y + j * Dv.y + Vp.y,
-				i * Du.z + j * Dv.z + Vp.z);
-		Ray ray = new Ray(eye, dir);
-
-		if (ray.trace(objectList)) {
-			Color shadedColor = ray.shade(lightList, objectList, background); // Assume shade returns JavaFX Color
-			gc.setFill(shadedColor);
-		} else {
-			gc.setFill(background); // Directly use JavaFX background color
-		}
-		gc.fillOval(i, j, 1, 1);
-	}
-
 	public int getHeight() {
 		return this.height;
+	}
+	public Render getRenderer() {
+		return this.renderer;
 	}
 
 	public int getWidth() {
@@ -102,6 +88,11 @@ public class Driver {
 		Dv = Vector3D.normalize(look.cross(Du));
 		float fl = (float) (width / (2 * Math.tan((0.5 * fov) * Math.PI / 180)));
 		Vp = Vector3D.normalize(look);
+
+		renderer.setDu(Du);
+		renderer.setDv(Dv);
+		renderer.setVp(Vp);
+
 		Vp.x = Vp.x * fl - 0.5f * (width * Du.x + height * Dv.x);
 		Vp.y = Vp.y * fl - 0.5f * (width * Du.y + height * Dv.y);
 		Vp.z = Vp.z * fl - 0.5f * (width * Du.z + height * Dv.z);
