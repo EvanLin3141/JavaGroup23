@@ -14,6 +14,11 @@ kt = transmission coefficient
 kr = reflectance coefficient
 ns phong exponent
  */
+
+/**
+ * This class models how surfaces interact with light using shading,
+ * shadows, highlights and reflections
+ */
 public class Surface {
 
     // surface's intrinsic colour
@@ -33,6 +38,20 @@ public class Surface {
     private static final float TINY = 0.001f;
     private static final float I255 = 0.00392156f;  // 1/255
 
+
+    /**
+     * Constructs a surface with the specified colour and light parameters
+     * @param red Intrinsic red component
+     * @param green Intrinsic green component
+     * @param blue Intrinsic blue component
+     * @param ambient Ambient reflection coefficient
+     * @param diffuse Diffuse reflection coefficient
+     * @param specular Specular reflection coefficient
+     * @param phongExp Phong exponent
+     * @param reflectance Reflectance coefficient
+     * @param transmission Transmission coefficient
+     * @param index Refractive index
+     */
     public Surface(float red, float green, float blue,
                    float ambient, float diffuse, float specular, float phongExp,
                    float reflectance, float transmission, float index) {
@@ -47,6 +66,19 @@ public class Surface {
         this.transmission = transmission;
         refractiveIndex = index;
     }
+
+
+    /**
+     * Calculates the colour at a surface point based on lighting and reflection parameters
+     *
+     * @param intersectionPoint Intersection point on the surface
+     * @param surfaceNormal The surface normal vector at the intersection point
+     * @param view The vector pointing back towards the ray origin
+     * @param lights The list of light sources in the scene
+     * @param objects The list of objects in the scene
+     * @param backgroundColour The background colour
+     * @return The colour at the surface point
+     */
 
     public Color shade(Vector3D intersectionPoint, Vector3D surfaceNormal, Vector3D view, java.util.List<Object> lights, List<Object> objects, Color backgroundColour) {
         float red = 0;

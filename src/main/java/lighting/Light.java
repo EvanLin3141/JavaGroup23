@@ -24,12 +24,12 @@ public class Light {
     public float intensityBlue;
 
     /**
-     * Constructs a new Light object.
-     * @param type The type of light (ambient, directional or point).
-     * @param red The amount of red in the light.
-     * @param green The amount of green in the light.
-     * @param blue The amount of blue in the light.
-     * @param positionOrDirection A {@code Vector3D} representing the light's position (for point light) or direction (for directional light).
+     * Constructs a new Light object
+     * @param type The type of light (ambient, directional or point)
+     * @param red The amount of red in the light
+     * @param green The amount of green in the light
+     * @param blue The amount of blue in the light
+     * @param positionOrDirection A {@code Vector3D} representing the light's position (for point light) or direction (for directional light)
      */
     public Light(int type, float red, float green, float blue, Vector3D positionOrDirection) {
         lightType = type;
