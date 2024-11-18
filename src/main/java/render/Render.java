@@ -8,11 +8,11 @@ import shapes.Vector3D;
 import java.util.List;
 
 public class Render {
-    private GraphicsContext gc;
-    private Color background;
-    private Vector3D eye;
-    private List<Object> objectList;
-    private List<Object> lightList;
+    private final GraphicsContext gc;
+    private final Color background;
+    private final Vector3D eye;
+    private final List<Object> objectList;
+    private final List<Object> lightList;
     private Vector3D Du, Dv, Vp;
 
     public Render(GraphicsContext gc, Color background, Vector3D eye,
@@ -34,7 +34,6 @@ public class Render {
                 i * Du.y + j * Dv.y + Vp.y,
                 i * Du.z + j * Dv.z + Vp.z
         );
-        System.out.println(eye);
         Ray ray = new Ray(eye, dir);
 
         if (ray.trace(objectList)) {
