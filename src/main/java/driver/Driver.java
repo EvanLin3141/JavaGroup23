@@ -53,8 +53,8 @@ public class Driver {
 			System.out.println(eye);
 			System.out.println(lookat);
 		}
+		this.renderer = new Render(gc, background, eye, objectList, lightList, Du, Dv, Vp, this.width, this.height, canvas);
 		nullViewPoint();
-		this.renderer = new Render(gc, background, eye, objectList, lightList, Du, Dv, Vp);
 		viewDirection();
 
 	}
@@ -67,6 +67,9 @@ public class Driver {
 
 	public Image getRenderedImage() {
 		return canvas.snapshot(null, null);
+	}
+	public void renderImage() {
+		this.renderer.getRenderer();
 	}
 	public int getHeight() {
 		return this.height;

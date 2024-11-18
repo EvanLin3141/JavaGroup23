@@ -3,6 +3,7 @@ package controller;
 import api.RayTracing;
 import driver.Driver;
 import camera.Camera;
+import javafx.scene.image.Image;
 import render.Render;
 import shapes.Vector3D;
 
@@ -18,23 +19,15 @@ public class Controller {
     private RayTracing scene;
     private static Camera camera;
     private final float zoomFactor = 1.1f; // Adjust for zoom scaling
-    private Render renderer;
+    private Image renderer;
 
 
     private final float shiftAmount = 1.0f; // Amount to shift the camera each time
 
     public void run() {
         camera = scene.getCamera();
-        renderer = sceneToRender.getRenderer();
-        long time = System.currentTimeMillis();
-        for (int j = 0; j < sceneToRender.getHeight(); j += 1) {
-            for (int i = 0; i < sceneToRender.getWidth(); i += 1) {
-                renderer.renderPixel(i, j);
-            }
-        }
+        sceneToRender.renderImage();
         renderedImage.setImage(sceneToRender.getRenderedImage());
-        time = System.currentTimeMillis() - time;
-        System.err.println("Rendered in "+(time/60000)+":"+((time%60000)*0.001));
         finished = true;
     }
 
